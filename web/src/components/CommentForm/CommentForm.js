@@ -1,13 +1,23 @@
 import { useState } from 'react'
 
 import {
-  Form,
+  // Form,
   FormError,
   Label,
   TextField,
   TextAreaField,
   Submit,
 } from '@redwoodjs/forms'
+import {
+  FormLabel,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  Textarea,
+  Button,
+} from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
+
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -25,6 +35,22 @@ const CREATE = gql`
 `
 
 const CommentForm = ({ postId }) => {
+  function validateName(value) {
+    let error
+    if (!value) {
+      error = 'Name is required'
+    }
+    return error
+  }
+
+  function validateBody(value) {
+    let error
+    if (!value) {
+      error = 'Comment is required'
+    }
+    return error
+  }
+
   const [hasPosted, setHasPosted] = useState(false)
   const [createComment, { loading, error }] = useMutation(CREATE, {
     onCompleted: () => {
@@ -35,51 +61,50 @@ const CommentForm = ({ postId }) => {
   })
 
   const onSubmit = (input) => {
+    console.log(input)
     createComment({ variables: { input: { postId, ...input } } })
   }
 
   return (
     <div className={hasPosted ? 'hidden' : ''}>
       <h3 className="font-light text-lg text-gray-600">Leave a Comment</h3>
-      <Form className="mt-4 w-full" onSubmit={onSubmit}>
-        <FormError
-          error={error}
-          titleClassName="font-semibold"
-          wrapperClassName="bg-red-100 text-red-900 text-sm p-3 rounded"
-        />
-        <Label
-          name="name"
-          className="block text-xs font-semibold text-gray-500 uppercase"
-        >
-          Name
-        </Label>
-        <TextField
-          name="name"
-          className="block w-full p-1 border rounded text-sm "
-          validation={{ required: true }}
-        />
-
-        <Label
-          name="body"
-          className="block mt-4 text-xs font-semibold text-gray-500 uppercase"
-        >
-          Comment
-        </Label>
-        <TextAreaField
-          name="body"
-          className="block w-full p-1 border rounded h-24 text-sm"
-          validation={{ required: true }}
-        />
-
-        <Submit
-          disabled={loading}
-          className="block mt-4 bg-blue-500 text-white text-xs font-semibold uppercase tracking-wide rounded px-3 py-2 disabled:opacity-50"
-        >
-          Submit
-        </Submit>
-      </Form>
+      <Formik
+      initialValues={{ name: 'Sasuke' }}
+      onSubmit={onSubmit}
+    >
+      {(props) => (
+        <Form>
+          <Field name='name' validate={validateName}>
+            {({ field, form }) => (
+              <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormLabel>Name</FormLabel>
+                <Input {...field} placeholder='name' />
+                <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+              </FormControl>
+            )}
+          </Field>
+          <Field name='body' validate={validateBody}>
+            {({ field, form }) => (
+              <FormControl isInvalid={form.errors.body && form.touched.body}>
+                <FormLabel>Comment</FormLabel>
+                <Input {...field} placeholder='comment' />
+                <FormErrorMessage>{form.errors.body}</FormErrorMessage>
+              </FormControl>
+            )}
+          </Field>
+          <Button
+            mt={4}
+            colorScheme='teal'
+            isLoading={props.isSubmitting}
+            type='submit'
+          >
+            Submit
+          </Button>
+        </Form>
+      )}
+    </Formik>
     </div>
-  )
-}
+  );
+};
 
-export default CommentForm
+export default CommentForm;

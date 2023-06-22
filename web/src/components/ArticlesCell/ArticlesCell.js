@@ -1,4 +1,5 @@
 import Article from 'src/components/Article'
+import { Box } from '@chakra-ui/react'
 
 export const QUERY = gql`
   query ArticlesQuery {
@@ -22,10 +23,10 @@ export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
 export const Success = ({ articles }) => {
   return (
-    <div className="space-y-10">
+    <Box spacing={10}>
       {articles.map((article) => (
         <Article article={article} key={article.id} summary={true} />
       ))}
-    </div>
+    </Box>
   )
 }

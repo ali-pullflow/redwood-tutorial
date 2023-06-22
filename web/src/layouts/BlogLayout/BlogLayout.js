@@ -1,67 +1,93 @@
 import { Link, routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
+import {
+  Link as ChakraLink,
+  Box,
+  Flex,
+  Heading,
+  Button,
+  Text,
+} from '@chakra-ui/react';
+
 
 import { useAuth } from 'src/auth'
 
 const BlogLayout = ({ children }) => {
-  const { logOut, isAuthenticated, currentUser } = useAuth()
+  const { logOut, isAuthenticated, currentUser } = useAuth();
 
   return (
     <>
       <Toaster />
-      <header className="relative flex justify-between items-center py-4 px-8 bg-blue-700 text-white">
-        <h1 className="text-5xl font-semibold tracking-tight">
-          <Link
-            className="text-blue-400 hover:text-blue-100 transition duration-100"
-            to={routes.home()}
-          >
-            Redwood Blog
-          </Link>
-        </h1>
-        <nav>
-          <ul className="relative flex items-center font-light">
-            <li>
-              <Link
-                className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"
-                to={routes.about()}
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"
-                to={routes.contact()}
-              >
-                Contact
-              </Link>
-            </li>
-            <li>
-              {isAuthenticated ? (
-                <div>
-                  <button type="button" onClick={logOut} className="py-2 px-4">
+      <header py={4} px={8} bg="blue.700" color="white">
+        <Flex justify="space-between" items="center">
+          <Heading as="h1" size="xl" fontWeight="semibold" tracking="tight">
+            <ChakraLink
+              color="blue.400"
+              _hover={{ color: 'blue.100' }}
+              transition="color 0.1s"
+              to={routes.home()}
+              as={Link}
+            >
+              Redwood Blog
+            </ChakraLink>
+          </Heading>
+          <nav>
+            <Flex alignItems="center" fontWeight="light">
+              <Box>
+                <ChakraLink
+                  as={Link}
+                  to={routes.about()}
+                  px={4}
+                  py={2}
+                  _hover={{ bg: 'blue.600' }}
+                  transition="background-color 0.1s"
+                  rounded="md"
+                >
+                  About
+                </ChakraLink>
+              </Box>
+              <Box>
+                <ChakraLink
+                  as={Link}
+                  to={routes.contact()}
+                  px={4}
+                  py={2}
+                  _hover={{ bg: 'blue.600' }}
+                  transition="background-color 0.1s"
+                  rounded="md"
+                >
+                  Contact
+                </ChakraLink>
+              </Box>
+              <Box>
+                {isAuthenticated ? (
+                  <Button type="button" onClick={logOut} py={2} px={4}>
                     Logout
-                  </button>
-                </div>
-              ) : (
-                <Link to={routes.login()} className="py-2 px-4">
-                  Login
-                </Link>
-              )}
-            </li>
-          </ul>
-          {isAuthenticated && (
-            <div className="absolute bottom-1 right-0 mr-12 text-xs text-blue-300">
-              {currentUser.email}
-            </div>
-          )}
-        </nav>
+                  </Button>
+                ) : (
+                  <ChakraLink as={Link} to={routes.login()} py={2} px={4}>
+                    Login
+                  </ChakraLink>
+                )}
+              </Box>
+            </Flex>
+            {isAuthenticated && (
+              <Text
+                fontSize="xs"
+                color="blue.300"
+                className="absolute bottom-1 right-0 mr-12 text-xs text-blue-300"
+              >
+                {currentUser.email}
+              </Text>
+            )}
+          </nav>
+        </Flex>
       </header>
-      <main className="max-w-4xl mx-auto p-12 bg-white shadow rounded-b">
+      <Box maxW="4xl" mx="auto" p={12} bg="white" shadow="md" rounded="md">
         {children}
-      </main>
+      </Box>
     </>
-  )
-}
+  );
+};
 
-export default BlogLayout
+export default BlogLayout;
