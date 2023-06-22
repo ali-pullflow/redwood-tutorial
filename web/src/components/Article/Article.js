@@ -8,7 +8,6 @@ const truncate = (text, length) => {
 
 const Article = ({ article, summary = false }) => {
   return (
-    <article>
     <Card>
       <CardHeader>
         <Heading size="md">
@@ -21,18 +20,15 @@ const Article = ({ article, summary = false }) => {
       <CardBody>
         <p>{summary ? truncate(article.body, 100) : article.body}</p>
       </CardBody>
-      <CardFooter>
+      <CardFooter style={{ flexDirection: 'column', gap: '1rem' }}>
         {!summary && (
           <>
-            <CommentForm postId={article.id} />
-            <div className="mt-12">
-              <CommentsCell postId={article.id} />
-            </div>
-          </>
-        )}
+          <CommentForm postId={article.id} />
+          <CommentsCell postId={article.id} />
+        </>
+      )}
       </CardFooter>
     </Card>
-    </article>
   )
 }
 

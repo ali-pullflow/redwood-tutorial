@@ -23,10 +23,10 @@ export const Failure = ({ error }) => <div>Error: {error.message}</div>
 
 export const Success = ({ articles }) => {
   return (
-    <Box spacing={10}>
+    <div className="space-y-8">
       {articles.map((article) => (
         <Article article={article} key={article.id} summary={true} />
       ))}
-    </Box>
+    </div>
   )
 }

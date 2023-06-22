@@ -69,7 +69,7 @@ const CommentForm = ({ postId }) => {
     <div className={hasPosted ? 'hidden' : ''}>
       <h3 className="font-light text-lg text-gray-600">Leave a Comment</h3>
       <Formik
-      initialValues={{ name: 'Sasuke' }}
+      initialValues={{ name: '', body: '' }}
       onSubmit={onSubmit}
     >
       {(props) => (
