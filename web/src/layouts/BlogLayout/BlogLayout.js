@@ -13,7 +13,7 @@ import {
 import { useAuth } from 'src/auth'
 
 const BlogLayout = ({ children }) => {
-  const { logOut, isAuthenticated, currentUser } = useAuth();
+  const { logOut, isAuthenticated, currentUser, hasRole } = useAuth();
 
   return (
     <>
@@ -34,6 +34,22 @@ const BlogLayout = ({ children }) => {
           <nav>
             <Flex alignItems="center" fontWeight="light">
               <Box>
+              {hasRole('admin') && (
+
+                <ChakraLink
+                as={Link}
+                to={routes.newPost()}
+                px={4}
+                py={2}
+                _hover={{ bg: 'blue.600' }}
+                transition="background-color 0.1s"
+                rounded="md"
+                >
+                  Create Post
+                </ChakraLink>
+                  )}
+              </Box>
+            <Box>
                 <ChakraLink
                   as={Link}
                   to={routes.about()}
