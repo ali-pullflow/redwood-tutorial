@@ -25,9 +25,9 @@ const SignupPage = () => {
   }, [isAuthenticated])
 
   // focus on email box on page load
-  const usernameRef = useRef()
+  const emailRef = useRef()
   useEffect(() => {
-    usernameRef.current.focus()
+    emailRef.current.focus()
   }, [])
 
   const onSubmit = async (data) => {
@@ -58,27 +58,54 @@ const SignupPage = () => {
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
                 <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                  <Label
-                    name="username"
+                <Label
+                    name="name"
                     className="rw-label"
                     errorClassName="rw-label rw-label-error"
                   >
-                    Username
+                    Name
                   </Label>
                   <TextField
-                    name="username"
+                    name="name"
                     className="rw-input"
                     errorClassName="rw-input rw-input-error"
-                    ref={usernameRef}
+
                     validation={{
                       required: {
                         value: true,
-                        message: 'Username is required',
+                        message: 'Name is required',
                       },
                     }}
                   />
 
-                  <FieldError name="username" className="rw-field-error" />
+                  <FieldError name="name" className="rw-field-error" />
+
+                  <Label
+                    name="email"
+                    className="rw-label"
+                    errorClassName="rw-label rw-label-error"
+                  >
+                    Email
+                  </Label>
+                  <TextField
+                    name="email"
+                    className="rw-input"
+                    errorClassName="rw-input rw-input-error"
+                    ref={emailRef}
+                    validation={{
+                      required: {
+                        value: true,
+                        message: 'Email is required',
+                      },
+
+                  pattern: {
+                    value: /[^@]+@[^.]+\..+/,
+                    message: 'Please enter a valid email address',
+                  },
+                  }}
+                  />
+
+                  <FieldError name="email" className="rw-field-error" />
 
                   <Label
                     name="password"

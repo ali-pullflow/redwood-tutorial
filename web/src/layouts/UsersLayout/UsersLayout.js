@@ -9,18 +9,18 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-
 import { useAuth } from 'src/auth'
 
-const BlogLayout = ({ children }) => {
+const UsersLayout = (props) => {
   const { logOut, isAuthenticated, currentUser, hasRole } = useAuth();
 
   return (
+
     <>
       <Toaster />
       <header py={4} px={8} bg="blue.700" color="white">
         <Flex justify="space-between" items="center">
-          <Heading as="h1" size="xl" fontWeight="semibold" tracking="tight">
+      <Heading as="h1" size="xl" fontWeight="semibold" tracking="tight">
             <ChakraLink
               color="blue.400"
               _hover={{ color: 'blue.100' }}
@@ -34,61 +34,29 @@ const BlogLayout = ({ children }) => {
           <nav>
             <Flex alignItems="center" fontWeight="light">
             <Box>
-              {hasRole('admin') && (
-
-                <ChakraLink
-                as={Link}
-                to={routes.users()}
-                px={4}
-                py={2}
-                _hover={{ bg: 'blue.600' }}
-                transition="background-color 0.1s"
-                rounded="md"
-                >
-                  Admin Portal
-                </ChakraLink>
-                  )}
-              </Box>
-              <Box>
-              {hasRole('admin') && (
-
-                <ChakraLink
-                as={Link}
-                to={routes.newPost()}
-                px={4}
-                py={2}
-                _hover={{ bg: 'blue.600' }}
-                transition="background-color 0.1s"
-                rounded="md"
-                >
-                  Create Post
-                </ChakraLink>
-                  )}
-              </Box>
-            <Box>
                 <ChakraLink
                   as={Link}
-                  to={routes.about()}
+                  to={routes.users()}
                   px={4}
                   py={2}
                   _hover={{ bg: 'blue.600' }}
                   transition="background-color 0.1s"
                   rounded="md"
                 >
-                  About
+                  Users
                 </ChakraLink>
               </Box>
               <Box>
                 <ChakraLink
                   as={Link}
-                  to={routes.contact()}
+                  to={routes.newUser()}
                   px={4}
                   py={2}
                   _hover={{ bg: 'blue.600' }}
                   transition="background-color 0.1s"
                   rounded="md"
                 >
-                  Contact
+                  Create User
                 </ChakraLink>
               </Box>
               <Box>
@@ -113,13 +81,13 @@ const BlogLayout = ({ children }) => {
               </Text>
             )}
           </nav>
-        </Flex>
+          </Flex>
       </header>
       <Box maxW="4xl" mx="auto" p={12} bg="white" shadow="md" rounded="md">
-        {children}
+        {props.children}
       </Box>
-    </>
-  );
-};
+      </>
+  )
+}
 
-export default BlogLayout;
+export default UsersLayout
