@@ -1,3 +1,4 @@
+import { Container, Table, TableCaption, TableContainer, Thead, Tr, Th, Td, Tbody, Button, ButtonGroup } from '@chakra-ui/react'
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
@@ -35,55 +36,63 @@ const UsersList = ({ users }) => {
   }
 
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Roles</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{truncate(user.id)}</td>
-              <td>{truncate(user.name)}</td>
-              <td>{truncate(user.email)}</td>
-              <td>{truncate(user.roles)}</td>
-              <td>
-                <nav className="rw-table-actions">
-                  <Link
-                    to={routes.user({ id: user.id })}
-                    title={'Show user ' + user.id + ' detail'}
-                    className="rw-button rw-button-small"
-                  >
-                    Show
-                  </Link>
-                  <Link
-                    to={routes.editUser({ id: user.id })}
-                    title={'Edit user ' + user.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    type="button"
-                    title={'Delete user ' + user.id}
-                    className="rw-button rw-button-small rw-button-red"
-                    onClick={() => onDeleteClick(user.id)}
-                  >
-                    Delete
-                  </button>
-                </nav>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Container maxW="container.xl">
+      <TableContainer>
+        <Table colorScheme="teal">
+          <TableCaption>Users</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Id</Th>
+              <Th>Name</Th>
+              <Th>Email</Th>
+              <Th>Roles</Th>
+              <Th>&nbsp;</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {users.map((user) => (
+              <Tr key={user.id}>
+                <Td>{truncate(user.id)}</Td>
+                <Td>{truncate(user.name)}</Td>
+                <Td>{truncate(user.email)}</Td>
+                <Td>{truncate(user.roles)}</Td>
+                <Td>
+                  <ButtonGroup>
+                    <Link
+                      to={routes.user({ id: user.id })}
+                    >
+                      <Button
+                        colorScheme='green'
+                      >
+                        Show
+                      </Button>
+                    </Link>
+                    <Link
+                      to={routes.editUser({ id: user.id })}
+                    >
+                      <Button
+                        colorScheme='teal'
+                      >
+                        Edit
+                      </Button>
+                    </Link>
+                    <Button
+                      type="button"
+                      title={'Delete user ' + user.id}
+                      color={'red'}
+                      onClick={() => onDeleteClick(user.id)}
+                    >
+                      Delete
+                    </Button>
+                  </ButtonGroup>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+
+      </TableContainer>
+    </Container>
   )
 }
 
