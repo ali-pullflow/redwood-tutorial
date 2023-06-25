@@ -8,6 +8,7 @@ import {
   PasswordField,
   FieldError,
   Submit,
+  EmailField,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
@@ -25,9 +26,9 @@ const SignupPage = () => {
   }, [isAuthenticated])
 
   // focus on email box on page load
-  const emailRef = useRef()
+  const usernameRef = useRef()
   useEffect(() => {
-    emailRef.current.focus()
+    usernameRef.current.focus()
   }, [])
 
   const onSubmit = async (data) => {
@@ -81,17 +82,17 @@ const SignupPage = () => {
                   <FieldError name="name" className="rw-field-error" />
 
                   <Label
-                    name="email"
+                    name="username"
                     className="rw-label"
                     errorClassName="rw-label rw-label-error"
                   >
                     Email
                   </Label>
                   <TextField
-                    name="email"
+                    name="username"
                     className="rw-input"
                     errorClassName="rw-input rw-input-error"
-                    ref={emailRef}
+                    ref={usernameRef}
                     validation={{
                       required: {
                         value: true,
@@ -105,7 +106,7 @@ const SignupPage = () => {
                   }}
                   />
 
-                  <FieldError name="email" className="rw-field-error" />
+                  <FieldError name="username" className="rw-field-error" />
 
                   <Label
                     name="password"
