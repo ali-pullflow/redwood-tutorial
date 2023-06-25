@@ -1,14 +1,39 @@
-import { useEffect, useRef } from 'react'
-
-import { Form, Label, TextField, Submit, FieldError } from '@redwoodjs/forms'
-import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
+import { useState, useEffect, useRef } from 'react'
+import {
+  FormLabel,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  Textarea,
+  Button,
+  Heading,
+  Container,
+  Box,
+} from '@chakra-ui/react';
+
+import { Field, Form, Formik } from 'formik';
+import { useMutation } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
+import { routes, Link, navigate } from '@redwoodjs/router'
+
 import { useAuth } from 'src/auth'
+import Header from 'src/components/Header/Header';
 
 const ForgotPasswordPage = () => {
   const { isAuthenticated, forgotPassword } = useAuth()
+
+  function validateEmail(value) {
+    let error
+    if (!value) {
+      error = 'Email is required'
+    }
+    else if (!value.match(/[^@]+@[^.]+\..+/)) {
+      error = 'Please enter a valid email address'
+    }
+    return error
+  }
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -16,10 +41,11 @@ const ForgotPasswordPage = () => {
     }
   }, [isAuthenticated])
 
-  const usernameRef = useRef()
-  useEffect(() => {
-    usernameRef.current.focus()
-  }, [])
+  // const usernameRef = useRef()
+
+  // useEffect(() => {
+  //   usernameRef.current.focus()
+  // }, [])
 
   const onSubmit = async (data) => {
     const response = await forgotPassword(data.username)
@@ -39,52 +65,49 @@ const ForgotPasswordPage = () => {
 
   return (
     <>
-      <MetaTags title="Forgot Password" />
-
-      <main className="rw-main">
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-        <div className="rw-scaffold rw-login-container">
-          <div className="rw-segment">
-            <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">
-                Forgot Password
-              </h2>
-            </header>
-
-            <div className="rw-segment-main">
-              <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                  <div className="text-left">
-                    <Label
-                      name="username"
-                      className="rw-label"
-                      errorClassName="rw-label rw-label-error"
-                    >
-                      Username
-                    </Label>
-                    <TextField
-                      name="username"
-                      className="rw-input"
-                      errorClassName="rw-input rw-input-error"
-                      ref={usernameRef}
-                      validation={{
-                        required: true,
-                      }}
-                    />
-
-                    <FieldError name="username" className="rw-field-error" />
-                  </div>
-
-                  <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Submit</Submit>
-                  </div>
-                </Form>
+    <Header/>
+    <MetaTags title="Forgot Password" description="Forgot Password"/>
+    <Container maxW="xl" py={8}>
+    <main className="rw-main w-96 mx-auto mt-12">
+      <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
+      <header className="rw-segment-header">
+        <Heading as='h2' size='lg' fontWeight='bold'>
+          Forgot Password?
+        </Heading>
+      </header>
+      <Box maxW="sm" mx="auto" p={4} borderWidth={1} borderRadius="md" boxShadow="md" bgColor={'whiteAlpha.300'}>
+        <Formik
+          initialValues={{ username: ''}}
+          onSubmit={onSubmit}
+        >
+          {(props) => (
+            <Form>
+              <Field name='username' validate={validateEmail}>
+                {({ field, form }) => (
+                  <FormControl isInvalid={form.errors.username && form.touched.username}>
+                    <FormLabel>Email</FormLabel>
+                    <Input {...field} placeholder='email' />
+                    <FormErrorMessage>{form.errors.username}</FormErrorMessage>
+                  </FormControl>
+                )}
+              </Field>
+              <div className="rw-form-buttons">
+                <Button
+                  mt={4}
+                  colorScheme='teal'
+                  isLoading={props.isSubmitting}
+                  type='submit'
+                >
+                  Submit
+                </Button>
               </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </>
+            </Form>
+          )}
+        </Formik>
+      </Box>
+    </main>
+  </Container>
+  </>
   )
 }
 

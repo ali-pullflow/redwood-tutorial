@@ -35,11 +35,11 @@ const Header = ({ children }) => {
                 <Button colorScheme="teal">Blog Portal</Button>
               </Link>
             )}
-        {(isPage('/admin/posts') || isPage('/admin/posts/new')) && (
+        {/* {(isPage('/admin/posts') || isPage('/admin/posts/new')) && (
           <Link to={routes.newPost()}>
             <Button colorScheme="teal">Create Post</Button>
           </Link>
-        )}
+        )} */}
         {(isPage('/') || isPage('/about') || isPage('/contact')) && [(
           <Link to={routes.about()}>
       <Button colorScheme="teal">About</Button>
@@ -54,9 +54,15 @@ const Header = ({ children }) => {
             Log Out
           </Button>
         ) : (
-          <Link to={routes.login()}>
-            <Button colorScheme="teal">Sign In</Button>
-          </Link>
+          isPage('/login') ? (
+            <Link to={routes.signup()}>
+              <Button colorScheme="teal">Sign Up</Button>
+            </Link>
+          ) : (
+            <Link to={routes.login()}>
+              <Button colorScheme="teal">Sign In</Button>
+            </Link>
+          )
         )}
         </ButtonGroup>
       </Flex>

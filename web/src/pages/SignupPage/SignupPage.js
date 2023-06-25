@@ -60,6 +60,7 @@ const SignupPage = () => {
   }, [isAuthenticated])
 
   const onSubmit = async (data) => {
+    console.log(data)
     const response = await signUp({ ...data })
 
     if (response.message) {
@@ -117,10 +118,22 @@ const SignupPage = () => {
                   <Field name="password" validate={validatePassword}>
                     {({ field, form }) => (
                       <FormControl isInvalid={form.errors.password && form.touched.password}>
-                        <FormLabel>Password</FormLabel>
-                        <Input {...field} id="password" placeholder="Password" />
-                        <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                      </FormControl>
+                      <FormLabel>Password</FormLabel>
+                      <InputGroup size='md'>
+                        <Input
+                          pr='4.5rem'
+                          type={show ? 'text' : 'password'}
+                          {...field}
+                          placeholder='password'
+                        />
+                        <InputRightElement width='4.5rem'>
+                          <Button h='1.75rem' size='sm' onClick={handleClick}>
+                            {show ? 'Hide' : 'Show'}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+                      <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+                    </FormControl>
                     )}
                   </Field>
                   <Button mt={4} colorScheme="teal" isLoading={props.isSubmitting} type="submit">

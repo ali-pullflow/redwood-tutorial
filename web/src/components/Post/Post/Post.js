@@ -1,6 +1,8 @@
-import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
+import { Container, Table, TableCaption, TableContainer, Tbody, Th, Tr, Td, Button, ButtonGroup } from '@chakra-ui/react'
 import { Link, routes, navigate } from '@redwoodjs/router'
+import { MetaTags, useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+
 
 const DELETE_POST_MUTATION = gql`
   mutation DeletePostMutation($id: Int!) {
@@ -45,50 +47,47 @@ const Post = ({ post }) => {
   }
 
   return (
-    <>
-      <div className="rw-segment">
-        <header className="rw-segment-header">
-          <h2 className="rw-heading rw-heading-secondary">
-            Post {post.id} Detail
-          </h2>
-        </header>
-        <table className="rw-table">
-          <tbody>
-            <tr>
-              <th>Id</th>
-              <td>{post.id}</td>
-            </tr>
-            <tr>
-              <th>Title</th>
-              <td>{post.title}</td>
-            </tr>
-            <tr>
-              <th>Body</th>
-              <td>{post.body}</td>
-            </tr>
-            <tr>
-              <th>Created at</th>
-              <td>{timeTag(post.createdAt)}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <nav className="rw-button-group">
+    <MetaTags title={`Post ${post.id}`} description={post.body}>
+    <Container maxW="container.xl">
+      <TableContainer>
+        <Table>
+          <TableCaption>Post {post.id} Detail</TableCaption>
+          <Tbody>
+            <Tr>
+              <Th>Id</Th>
+              <Td>{post.id}</Td>
+            </Tr>
+            <Tr>
+              <Th>Title</Th>
+              <Td>{post.title}</Td>
+            </Tr>
+            <Tr>
+              <Th>Body</Th>
+              <Td>{post.body}</Td>
+            </Tr>
+            <Tr>
+              <Th>Created at</Th>
+              <Td>{timeTag(post.createdAt)}</Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </TableContainer>
+      <ButtonGroup>
         <Link
           to={routes.editPost({ id: post.id })}
-          className="rw-button rw-button-blue"
         >
-          Edit
+          <Button colorScheme="teal">Edit</Button>
         </Link>
-        <a
-          href="#"
-          className="rw-button rw-button-red"
+        <Button
+          colorScheme="red"
+          variant={'outline'}
           onClick={() => onDeleteClick(post.id)}
         >
           Delete
-        </a>
-      </nav>
-    </>
+        </Button>
+      </ButtonGroup>
+    </Container>
+    </MetaTags>
   )
 }
 

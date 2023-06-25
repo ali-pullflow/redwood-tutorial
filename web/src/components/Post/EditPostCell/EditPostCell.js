@@ -1,7 +1,9 @@
 import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
+import { toast, Toaster } from '@redwoodjs/web/toast'
 import { navigate, routes } from '@redwoodjs/router'
 import PostForm from 'src/components/Post/PostForm'
+
+import { Container, Heading } from '@chakra-ui/react'
 
 export const QUERY = gql`
   query FindPostById($id: Int!) {
@@ -39,13 +41,16 @@ export const Success = ({ post }) => {
   }
 
   return (
-    <div className="rw-segment">
-      <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">Edit Post {post.id}</h2>
-      </header>
-      <div className="rw-segment-main">
+    <Container maxW="container.sm">
+      <main className="rw-main w-96 mx-auto mt-12">
+          <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
+          <header className="rw-segment-header">
+            <Heading as='h2' size='lg' fontWeight='bold'>
+              Edit Post {post?.id}
+            </Heading>
+          </header>
         <PostForm post={post} onSave={onSave} error={error} loading={loading} />
-      </div>
-    </div>
+      </main>
+      </Container>
   )
 }

@@ -1,6 +1,6 @@
 import { Container, Table, TableCaption, TableContainer, Tbody, Th, Tr, Td, Button, ButtonGroup } from '@chakra-ui/react'
 import { Link, routes, navigate } from '@redwoodjs/router'
-import { useMutation } from '@redwoodjs/web'
+import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { timeTag } from 'src/lib/formatters'
@@ -31,6 +31,7 @@ const User = ({ user }) => {
   }
 
   return (
+    <MetaTags title={`User ${user.id}`} description={user.name}>
     <Container maxW="container.xl">
       <TableContainer>
         <Table>
@@ -66,7 +67,8 @@ const User = ({ user }) => {
         </Link>
         <Button
           type="button"
-          color={'red'}
+          colorScheme={'red'}
+          variant={'outline'}
           onClick={() => onDeleteClick(user.id)}
         >
           Delete
@@ -74,6 +76,7 @@ const User = ({ user }) => {
       </ButtonGroup>
 
     </Container>
+    </MetaTags>
   )
 }
 

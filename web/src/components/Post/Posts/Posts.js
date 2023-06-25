@@ -1,8 +1,9 @@
-import { Container, Table, TableCaption, TableContainer, Thead, Tr, Th, Td, Tbody, Button, ButtonGroup } from '@chakra-ui/react'
+import { Container, Table, TableCaption, TableContainer, Thead, Tr, Th, Td, Tbody, Button, ButtonGroup, Flex } from '@chakra-ui/react'
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import { MetaTags } from '@redwoodjs/web'
 import { QUERY } from 'src/components/Post/PostsCell'
 
 const DELETE_POST_MUTATION = gql`
@@ -58,7 +59,15 @@ const PostsList = ({ posts }) => {
   }
 
   return (
+    <MetaTags title="Blog Portal">
     <Container maxW="container.xl">
+      <Flex justifyContent="flex-end" mb="2rem">
+        <Link to={routes.newPost()}>
+          <Button colorScheme="teal">
+            Create New Post
+          </Button>
+        </Link>
+      </Flex>
       <TableContainer>
         <Table colorScheme="teal">
           <TableCaption>Posts</TableCaption>
@@ -110,6 +119,7 @@ const PostsList = ({ posts }) => {
         </Table>
       </TableContainer>
     </Container>
+    </MetaTags>
   )
 }
 

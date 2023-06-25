@@ -1,6 +1,6 @@
 import { Container, Table, TableCaption, TableContainer, Thead, Tr, Th, Td, Tbody, Button, ButtonGroup } from '@chakra-ui/react'
 import { Link, routes } from '@redwoodjs/router'
-import { useMutation } from '@redwoodjs/web'
+import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/User/UsersCell'
@@ -36,6 +36,7 @@ const UsersList = ({ users }) => {
   }
 
   return (
+    <MetaTags title="Admin Portal">
     <Container maxW="container.xl">
       <TableContainer>
         <Table colorScheme="teal">
@@ -93,6 +94,7 @@ const UsersList = ({ users }) => {
 
       </TableContainer>
     </Container>
+    </MetaTags>
   )
 }
 
