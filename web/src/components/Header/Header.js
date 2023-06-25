@@ -25,11 +25,11 @@ const Header = ({ children }) => {
             <Button colorScheme="teal">Admin Portal</Button>
           </Link>
         )}
-        {(isPage('/users') || isPage('/users/new')) && (
+        {/* {(isPage('/users') || isPage('/users/new')) && (
           <Link to={routes.newUser()}>
             <Button colorScheme="teal">Create User</Button>
           </Link>
-        )}
+        )} */}
             {hasRole('admin') && (
               <Link to={routes.posts()}>
                 <Button colorScheme="teal">Blog Portal</Button>

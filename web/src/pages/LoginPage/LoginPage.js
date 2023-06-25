@@ -10,7 +10,8 @@ import {
   InputGroup,
   InputRightElement,
   Heading,
-  Container
+  Container,
+  Box,
 } from '@chakra-ui/react';
 import { Field, Form, Formik } from 'formik';
 
@@ -38,7 +39,7 @@ const LoginPage = () => {
   function validatePassword(value) {
     let error
     if (!value) {
-      error = 'Password required'
+      error = 'Password is required'
     }
     return error
   }
@@ -68,15 +69,14 @@ const LoginPage = () => {
       </header>
       <MetaTags title="Login" />
       <Container maxW="xl" py={8}>
-        <main>
+        <main className="rw-main w-96 mx-auto mt-12">
           <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-          <div className="rw-scaffold rw-login-container">
-            <div className="rw-segment">
               <header className="rw-segment-header">
-                <Heading as='h1' size='xl' textAlign='center' mb={8}>
+                <Heading as='h2' size='lg' fontWeight='bold'>
                   Login
                 </Heading>
               </header>
+              <Box maxW="sm" mx="auto" p={4} borderWidth={1} borderRadius="md" boxShadow="md" bgColor={'whiteAlpha.300'}>
               <Formik
                 initialValues={{ email: '', password: '' }}
                 onSubmit={onSubmit}
@@ -132,14 +132,13 @@ const LoginPage = () => {
                   </Form>
                 )}
               </Formik>
-            </div>
+              </Box>
             <div className="rw-login-link mt-2 text-center">
               <span>Don&apos;t have an account?</span>{' '}
               <Link to={routes.signup()} className="rw-link">
                 Sign up!
               </Link>
             </div>
-          </div>
         </main>
       </Container>
     </>
