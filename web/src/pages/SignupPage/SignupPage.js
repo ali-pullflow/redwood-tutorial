@@ -81,8 +81,7 @@ const SignupPage = () => {
       <Container maxW="xl" py={8}>
       <main className="rw-main w-96 mx-auto mt-12">
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-        {/* <div className="rw-scaffold rw-login-container">
-          <div className="rw-segment"> */}
+
             <header className="rw-segment-header">
               <Heading as="h2" size="lg" fontWeight="bold">
                 Sign Up
@@ -133,97 +132,12 @@ const SignupPage = () => {
                     }
               </Formik>
             </Box>
-
-            {/* <div className="rw-segment-main">
-              <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                <Label
-                    name="name"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Name
-                  </Label>
-                  <TextField
-                    name="name"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'Name is required',
-                      },
-                    }}
-                  />
-
-                  <FieldError name="name" className="rw-field-error" />
-
-                  <Label
-                    name="username"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Email
-                  </Label>
-                  <TextField
-                    name="username"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    ref={usernameRef}
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'Email is required',
-                      },
-
-                  pattern: {
-                    value: /[^@]+@[^.]+\..+/,
-                    message: 'Please enter a valid email address',
-                  },
-                  }}
-                  />
-
-                  <FieldError name="username" className="rw-field-error" />
-
-                  <Label
-                    name="password"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Password
-                  </Label>
-                  <PasswordField
-                    name="password"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    autoComplete="current-password"
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'Password is required',
-                      },
-                    }}
-                  />
-
-                  <FieldError name="password" className="rw-field-error" />
-
-                  <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">
-                      Sign Up
-                    </Submit>
-                  </div>
-                </Form>
-              </div>
-            </div> */}
-          {/* </div> */}
           <div className="rw-login-link mt-2 text-center">
             <span>Already have an account?</span>{' '}
             <Link to={routes.login()} className="rw-link">
               Log in!
             </Link>
           </div>
-        {/* </div>/ */}
       </main>
       </Container>
     </>

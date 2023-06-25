@@ -1,12 +1,25 @@
+import { MetaTags } from '@redwoodjs/web'
+import { useState } from 'react'
 import {
-  Form,
-  FormError,
-  FieldError,
-  Label,
-  TextField,
-  DatetimeLocalField,
-  Submit,
-} from '@redwoodjs/forms'
+  FormLabel,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  Textarea,
+  Button,
+  Heading,
+  Container,
+  Box,
+  Select,
+  ButtonGroup,
+  Spacer
+} from '@chakra-ui/react';
+
+import { Field, Form, Formik } from 'formik';
+import { useMutation } from '@redwoodjs/web'
+import { toast, Toaster } from '@redwoodjs/web/toast'
+
+import { navigate, routes, Link } from '@redwoodjs/router'
 
 const formatDatetime = (value) => {
   if (value) {
@@ -15,81 +28,91 @@ const formatDatetime = (value) => {
 }
 
 const UserForm = (props) => {
+  const [submitting, setSubmitting] = useState(false);
+  function validateEmail(value) {
+    let error
+    if (!value) {
+      error = 'Email is required'
+    }
+    else if (!value.match(/[^@]+@[^.]+\..+/)) {
+      error = 'Please enter a valid email address'
+    }
+    return error
+  }
+
+  function validateName(value) {
+    let error
+    if (!value) {
+      error = 'Name is required'
+    }
+    return error
+  }
+
   const onSubmit = (data) => {
     props.onSave(data, props?.user?.id)
   }
 
   return (
-    <div className="rw-form-wrapper">
-      <Form onSubmit={onSubmit} error={props.error}>
-        <FormError
-          error={props.error}
-          wrapperClassName="rw-form-error-wrapper"
-          titleClassName="rw-form-error-title"
-          listClassName="rw-form-error-list"
-        />
+    <>
+      <MetaTags title={props.user ? 'Edit User' : 'New User'} />
+        <Box maxW="sm" mx="auto" p={4} borderWidth={1} borderRadius="md" boxShadow="md" bgColor={'whiteAlpha.300'}>
+          <Formik
+            initialValues={{ name: props.user?.name, email: props.user?.email, roles: props.user?.roles }}
+            onSubmit={onSubmit}
+          >
+            {(props) => (
+              <Form>
+                <Field name='name' validate={validateName}>
+                  {({ field, form }) => (
+                    <FormControl isInvalid={form.errors.name && form.touched.name}>
+                      <FormLabel>Name</FormLabel>
+                      <Input {...field} placeholder='name' />
+                      <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+                <Field name='email' validate={validateEmail}>
+                  {({ field, form }) => (
+                    <FormControl isInvalid={form.errors.email && form.touched.email}>
+                      <FormLabel>Email</FormLabel>
+                      <Input {...field} placeholder='email' />
+                      <FormErrorMessage>{form.errors.email}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+                <FormControl>
+                  <FormLabel>Role</FormLabel>
+                <Select placeholder={props.user?.roles}>
+                  <option value="admin">Admin</option>
+                  <option value="moderator">Moderator</option>
+                  <option value="user">User</option>
+                </Select>
+                </FormControl>
+                <ButtonGroup>
+                  <Button
+                    mt={4}
+                    colorScheme='teal'
+                    type='submit'
+                    isLoading={props.isSubmitting}
+                  >
+                    Submit
+                  </Button>
+                  <Link to={routes.users()}>
+                  <Button
+                    mt={4}
+                    variant="outline"
+                    colorScheme="red"
+                  >
+                    Cancel
+                  </Button>
+                  </Link>
 
-        <Label
-          name="name"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Name
-        </Label>
-
-        <TextField
-          name="name"
-          defaultValue={props.user?.name}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-        />
-
-        <FieldError name="name" className="rw-field-error" />
-
-        <Label
-          name="email"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Email
-        </Label>
-
-        <TextField
-          name="email"
-          defaultValue={props.user?.email}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="email" className="rw-field-error" />
-
-        
-        <Label
-          name="roles"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Roles
-        </Label>
-
-        <TextField
-          name="roles"
-          defaultValue={props.user?.roles}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="roles" className="rw-field-error" />
-
-        <div className="rw-button-group">
-          <Submit disabled={props.loading} className="rw-button rw-button-blue">
-            Save
-          </Submit>
-        </div>
-      </Form>
-    </div>
+                </ButtonGroup>
+              </Form>
+            )}
+          </Formik>
+        </Box>
+    </>
   )
 }
 

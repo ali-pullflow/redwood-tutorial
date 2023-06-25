@@ -62,9 +62,10 @@ const UsersList = ({ users }) => {
                       to={routes.user({ id: user.id })}
                     >
                       <Button
-                        colorScheme='green'
+                      variant={'outline'}
+                        colorScheme='teal'
                       >
-                        Show
+                        View
                       </Button>
                     </Link>
                     <Link
@@ -77,9 +78,8 @@ const UsersList = ({ users }) => {
                       </Button>
                     </Link>
                     <Button
-                      type="button"
-                      title={'Delete user ' + user.id}
-                      color={'red'}
+                      variant="outline"
+                      colorScheme="red"
                       onClick={() => onDeleteClick(user.id)}
                     >
                       Delete

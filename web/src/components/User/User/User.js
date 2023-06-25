@@ -74,50 +74,6 @@ const User = ({ user }) => {
       </ButtonGroup>
 
     </Container>
-    // <>
-    //   <div className="rw-segment">
-    //     <header className="rw-segment-header">
-    //       <h2 className="rw-heading rw-heading-secondary">
-    //         User {user.id} Detail
-    //       </h2>
-    //     </header>
-    //     <table className="rw-table">
-    //       <tbody>
-    //         <tr>
-    //           <th>Id</th>
-    //           <td>{user.id}</td>
-    //         </tr>
-    //         <tr>
-    //           <th>Name</th>
-    //           <td>{user.name}</td>
-    //         </tr>
-    //         <tr>
-    //           <th>Email</th>
-    //           <td>{user.email}</td>
-    //         </tr>
-    //         <tr>
-    //           <th>Roles</th>
-    //           <td>{user.roles}</td>
-    //         </tr>
-    //       </tbody>
-    //     </table>
-    //   </div>
-    //   <nav className="rw-button-group">
-    //     <Link
-    //       to={routes.editUser({ id: user.id })}
-    //       className="rw-button rw-button-blue"
-    //     >
-    //       Edit
-    //     </Link>
-    //     <button
-    //       type="button"
-    //       className="rw-button rw-button-red"
-    //       onClick={() => onDeleteClick(user.id)}
-    //     >
-    //       Delete
-    //     </button>
-    //   </nav>
-    // </>
   )
 }
 
