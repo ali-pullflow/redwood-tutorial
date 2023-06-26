@@ -16,6 +16,8 @@ import { Field, Form, Formik } from 'formik';
 import { useMutation } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
+import { useAuth } from 'src/auth';
+
 const CREATE_CONTACT = gql`
   mutation CreateContactMutation($input: CreateContactInput!) {
     createContact(input: $input) {
@@ -25,6 +27,7 @@ const CREATE_CONTACT = gql`
 `
 
 const ContactPage = () => {
+  const { currentUser } = useAuth()
   const [createContact] = useMutation(CREATE_CONTACT)
   const [submitting, setSubmitting] = useState(false);
 
@@ -84,7 +87,7 @@ const ContactPage = () => {
           </header>
           <Box maxW="sm" mx="auto" p={4} borderWidth={1} borderRadius="md" boxShadow="md" bgColor={'whiteAlpha.300'}>
             <Formik
-              initialValues={{ name: '', email: '', message: '' }}
+              initialValues={{ name: currentUser?.name || '', email: currentUser?.email || '', message: '' }}
               onSubmit={onSubmit}
             >
               {(props) => (

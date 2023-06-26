@@ -1,14 +1,6 @@
 import { useState } from 'react'
 
 import {
-  // Form,
-  FormError,
-  Label,
-  TextField,
-  TextAreaField,
-  Submit,
-} from '@redwoodjs/forms'
-import {
   FormLabel,
   FormControl,
   FormErrorMessage,
@@ -23,6 +15,9 @@ import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY as CommentsQuery } from 'src/components/CommentsCell'
 
+import { useAuth } from 'src/auth'
+import { isConstValueNode } from 'graphql';
+
 const CREATE = gql`
   mutation CreateCommentMutation($input: CreateCommentInput!) {
     createComment(input: $input) {
@@ -35,6 +30,7 @@ const CREATE = gql`
 `
 
 const CommentForm = ({ postId }) => {
+  const { currentUser } = useAuth();
   function validateName(value) {
     let error
     if (!value) {
@@ -69,11 +65,12 @@ const CommentForm = ({ postId }) => {
     <div className={hasPosted ? 'hidden' : ''}>
       <h3 className="font-light text-lg text-gray-600">Leave a Comment</h3>
       <Formik
-      initialValues={{ name: '', body: '' }}
+      initialValues={{ name: currentUser?.name || '', body: '' }}
       onSubmit={onSubmit}
     >
       {(props) => (
         <Form>
+          {console.log(currentUser)}
           <Field name='name' validate={validateName}>
             {({ field, form }) => (
               <FormControl isInvalid={form.errors.name && form.touched.name}>

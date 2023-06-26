@@ -49,6 +49,7 @@ const UserForm = (props) => {
   }
 
   const onSubmit = (data) => {
+    console.log(data)
     props.onSave(data, props?.user?.id)
   }
 
@@ -80,14 +81,19 @@ const UserForm = (props) => {
                     </FormControl>
                   )}
                 </Field>
+                <Field name='roles'>
+                  {({ field, form }) => (
                 <FormControl>
+                  {console.log(props.user?.roles)}
                   <FormLabel>Role</FormLabel>
-                <Select placeholder={props.user?.roles}>
-                  <option value="admin">Admin</option>
-                  <option value="moderator">Moderator</option>
-                  <option value="user">User</option>
-                </Select>
+                  <Select {...field}>
+                    <option value="admin">Admin</option>
+                    <option value="moderator">Moderator</option>
+                    <option value="user">User</option>
+                  </Select>
                 </FormControl>
+                  )}
+                </Field>
                 <ButtonGroup>
                   <Button
                     mt={4}
