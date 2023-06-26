@@ -12,7 +12,9 @@ import {
 import { useAuth } from 'src/auth'
 import Header from 'src/components/Header/Header';
 
-const PostsLayout = (props) => {
+import { Container } from '@chakra-ui/react';
+
+const FormLayout = (props) => {
   const { logOut, isAuthenticated, currentUser, hasRole } = useAuth();
 
   return (
@@ -22,21 +24,12 @@ const PostsLayout = (props) => {
       <header py={4} px={8} bg="blue.700" color="white">
         <Header/>
 
-            {isAuthenticated && (
-              <Text
-                fontSize="xs"
-                color="blue.300"
-                className="absolute bottom-1 right-0 mr-12 text-xs text-blue-300"
-              >
-                {currentUser.email}
-              </Text>
-            )}
       </header>
-      <Box maxW="4xl" mx="auto" p={12} bg="white" shadow="md" rounded="md">
+      <Container maxW="container.xl" my={'100'}>
         {props.children}
-      </Box>
+      </Container>
       </>
   )
 }
 
-export default PostsLayout
+export default FormLayout

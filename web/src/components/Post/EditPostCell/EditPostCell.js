@@ -11,7 +11,6 @@ export const QUERY = gql`
       id
       title
       body
-      createdAt
     }
   }
 `
@@ -21,7 +20,6 @@ const UPDATE_POST_MUTATION = gql`
       id
       title
       body
-      createdAt
     }
   }
 `
@@ -42,7 +40,7 @@ export const Success = ({ post }) => {
 
   return (
     <Container maxW="container.sm">
-      <main className="rw-main w-96 mx-auto mt-12">
+      <main className="rw-main mx-auto mt-12">
           <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
           <header className="rw-segment-header">
             <Heading as='h2' size='lg' fontWeight='bold'>

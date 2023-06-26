@@ -64,9 +64,9 @@ const LoginPage = () => {
 
   return (
     <>
-      <header py={4} px={8} bg="blue.700" color="white">
+      {/* <header py={4} px={8} bg="blue.700" color="white">
         <Header />
-      </header>
+      </header> */}
       <MetaTags title="Login" />
       <Container maxW="xl" py={8}>
         <main className="rw-main w-96 mx-auto mt-12">

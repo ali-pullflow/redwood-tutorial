@@ -19,23 +19,21 @@ const BlogLayout = ({ children }) => {
   return (
     <>
       <Toaster />
-      <header py={4} px={8} bg="blue.700" color="white">
-          <Header/>
+        <Header/>
+      <Box maxW="8xl" mx="auto" p={12} bg="white" shadow="md" rounded="md" mt={8} mb={8}>
+        {children}
             {isAuthenticated && (
               <Text
                 fontSize="xs"
                 color="blue.300"
-                className="absolute bottom-1 right-0 mr-12 text-xs text-blue-300"
+                className="absolute bottom-2 text-xs text-blue-300"
               >
                 {currentUser.email}
               </Text>
             )}
-      </header>
-      <Box maxW="4xl" mx="auto" p={12} bg="white" shadow="md" rounded="md">
-        {children}
       </Box>
     </>
-  );
+  );a
 };
 
 export default BlogLayout;

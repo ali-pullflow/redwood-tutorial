@@ -12,8 +12,7 @@ import { Router, Route, Private, Set } from '@redwoodjs/router'
 import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
 
 import BlogLayout from 'src/layouts/BlogLayout'
-import PostsLayout from 'src/layouts/PostsLayout'
-import UsersLayout from 'src/layouts/UsersLayout'
+import FormLayout from './layouts/FormLayout/FormLayout'
 
 import { useAuth } from './auth'
 
@@ -21,29 +20,30 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
       {/* <Set wrap={ScaffoldLayout} title="Users" titleTo="users" buttonLabel="New User" buttonTo="newUser"> */}
-      <Set wrap={UsersLayout}>
-        <Route path="/users/new" page={UserNewUserPage} name="newUser" />
-        <Route path="/users/{id:Int}/edit" page={UserEditUserPage} name="editUser" />
+      {/* <Set wrap={UsersLayout}> */}
+      <Set wrap={BlogLayout}>
+      <Private unauthenticated="home" roles="admin">
         <Route path="/users/{id:Int}" page={UserUserPage} name="user" />
         <Route path="/users" page={UserUsersPage} name="users" />
-      </Set>
-      <Route path="/login" page={LoginPage} name="login" />
-      <Route path="/signup" page={SignupPage} name="signup" />
-      <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
-      <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
-      <Private unauthenticated="home" roles="admin">
-        <Set wrap={PostsLayout}>
-          <Route path="/admin/posts/new" page={PostNewPostPage} name="newPost" />
-          <Route path="/admin/posts/{id:Int}/edit" page={PostEditPostPage} name="editPost" />
-          <Route path="/admin/posts/{id:Int}" page={PostPostPage} name="post" />
-          <Route path="/admin/posts" page={PostPostsPage} name="posts" />
-        </Set>
+        <Route path="/admin/posts/{id:Int}" page={PostPostPage} name="post" />
+        <Route path="/admin/posts" page={PostPostsPage} name="posts" />
       </Private>
-      <Set wrap={BlogLayout}>
-        <Route path="/contact" page={ContactPage} name="contact" />
         <Route path="/article/{id:Int}" page={ArticlePage} name="article" />
         <Route path="/about" page={AboutPage} name="about" />
         <Route path="/" page={HomePage} name="home" />
+      </Set>
+      <Set wrap={FormLayout}>
+        <Private unauthenticated="home" roles="admin">
+          <Route path="/users/new" page={UserNewUserPage} name="newUser" />
+          <Route path="/users/{id:Int}/edit" page={UserEditUserPage} name="editUser" />
+          <Route path="/admin/posts/new" page={PostNewPostPage} name="newPost" />
+          <Route path="/admin/posts/{id:Int}/edit" page={PostEditPostPage} name="editPost" />
+        </Private>
+        <Route path="/contact" page={ContactPage} name="contact" />
+        <Route path="/login" page={LoginPage} name="login" />
+        <Route path="/signup" page={SignupPage} name="signup" />
+        <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
+        <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       </Set>
       <Route notfound page={NotFoundPage} />
     </Router>

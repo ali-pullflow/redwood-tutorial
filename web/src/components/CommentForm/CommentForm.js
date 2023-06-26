@@ -78,7 +78,7 @@ const CommentForm = ({ postId }) => {
             {({ field, form }) => (
               <FormControl isInvalid={form.errors.name && form.touched.name}>
                 <FormLabel>Name</FormLabel>
-                <Input {...field} placeholder='name' />
+                <Input {...field} placeholder='name' maxW={200}/>
                 <FormErrorMessage>{form.errors.name}</FormErrorMessage>
               </FormControl>
             )}
@@ -87,7 +87,7 @@ const CommentForm = ({ postId }) => {
             {({ field, form }) => (
               <FormControl isInvalid={form.errors.body && form.touched.body}>
                 <FormLabel>Comment</FormLabel>
-                <Input {...field} placeholder='comment' />
+                <Textarea {...field} placeholder='comment' />
                 <FormErrorMessage>{form.errors.body}</FormErrorMessage>
               </FormControl>
             )}

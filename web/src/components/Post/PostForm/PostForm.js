@@ -48,7 +48,7 @@ const PostForm = (props) => {
 
   return (
     <MetaTags title={props.post ? 'Edit Post ' + props.post.id : 'New Post'}>
-      <Box maxW="sm" mx="auto" p={4} borderWidth={1} borderRadius="md" boxShadow="md" bgColor={'whiteAlpha.300'}>
+      <Box mx="auto" p={4} borderWidth={1} borderRadius="md" boxShadow="md" bgColor={'whiteAlpha.300'}>
         <Formik
           initialValues={{ title: props.post?.title, body: props.post?.body, createdAt: formatDatetime(props.post?.createdAt), updatedAt: formatDatetime(props.post?.updatedAt) }}
           onSubmit={onSubmit}
@@ -68,7 +68,7 @@ const PostForm = (props) => {
                 {({ field, form }) => (
                   <FormControl isInvalid={form.errors.body && form.touched.body}>
                     <FormLabel>Body</FormLabel>
-                    <Input {...field} placeholder='body' />
+                    <Textarea {...field} placeholder='body' />
                     <FormErrorMessage>{form.errors.body}</FormErrorMessage>
                   </FormControl>
                 )}

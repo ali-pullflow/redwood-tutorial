@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, Button, Flex } from '@chakra-ui/react'
 import { useMutation } from '@redwoodjs/web'
 
 import { useAuth } from 'src/auth'
@@ -48,35 +48,20 @@ const Comment = ({ comment }) => {
       </CardHeader>
       <CardBody>
         <p className="text-sm mt-2">{comment.body}</p>
-      </CardBody>
-      {hasRole('moderator') && (
-        <button
-          type="button"
-          onClick={moderate}
-          className="absolute bottom-2 right-2 bg-red-500 text-xs rounded text-white px-2 py-1"
+        <Flex justify="flex-end" className="mt-4">
+      {(hasRole('moderator') || hasRole('admin')) && (
+        <Button
+        type="button"
+        colorScheme={'red'}
+        variant={'outline'}
+        onClick={() => moderate()}
         >
           Delete
-        </button>
+        </Button>
       )}
+      </Flex>
+      </CardBody>
     </Card>
-    // <div className="bg-gray-200 p-8 rounded-lg relative">
-    //   <header className="flex justify-between">
-    //     <h2 className="font-semibold text-gray-700">{comment.name}</h2>
-    //     <time className="text-xs text-gray-500" dateTime={comment.createdAt}>
-    //       {formattedDate(comment.createdAt)}
-    //     </time>
-    //   </header>
-    //   <p className="text-sm mt-2">{comment.body}</p>
-    //   {hasRole('moderator') && (
-    //     <button
-    //       type="button"
-    //       onClick={moderate}
-    //       className="absolute bottom-2 right-2 bg-red-500 text-xs rounded text-white px-2 py-1"
-    //     >
-    //       Delete
-    //     </button>
-    //   )}
-    // </div>
   )
 }
 
