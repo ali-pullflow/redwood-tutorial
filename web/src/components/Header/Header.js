@@ -1,7 +1,10 @@
-import { Box, Flex, Heading, Button, ChakraLink, space, Spacer, ButtonGroup, Avatar, Breadcrumb, BreadcrumbLink, BreadcrumbItem } from '@chakra-ui/react';
+import { Box, Flex, Heading, Button, ChakraLink, space, Spacer, ButtonGroup, Avatar, Breadcrumb, BreadcrumbLink, BreadcrumbItem, Tooltip, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { Link, routes, useLocation } from '@redwoodjs/router';
+import { render } from 'react-dom';
 
 import { useAuth } from 'src/auth';
+
+import { CloseIcon } from '@chakra-ui/icons';
 
 const Header = ({ children }) => {
   const { logOut, isAuthenticated, currentUser, hasRole } = useAuth();
@@ -12,73 +15,86 @@ const Header = ({ children }) => {
       return true;
     return location.pathname === page;
   };
+
+  const renderAvatar = () => {
+    if (isAuthenticated) {
+      return (
+        <Menu>
+          <MenuButton>
+            <Avatar size="sm" mt={-1} />
+          </MenuButton>
+          <MenuList color={'gray'}>
+            <MenuItem as={Link} to={routes.users()}>
+              Admin Portal
+            </MenuItem>
+            <MenuItem as={Link} to={routes.posts()}>
+              Blog Portal
+            </MenuItem>
+            <MenuItem as={Link} to={routes.about()}>
+              About
+            </MenuItem>
+            <MenuItem as={Link} to={routes.contact()}>
+              Contact
+            </MenuItem>
+            <MenuItem color={'red.500'} onClick={logOut} icon={<CloseIcon/>}>
+              Sign Out
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      );
+    } else if (isPage('/login')) {
+      return (
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} to={routes.signup()}>
+            Sign Up
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+      );
+    } else {
+      return (
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} to={routes.login()}>
+            Sign In
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+      );
+    }
+  };
+
   return (
-    <Box bg="gray.800" color="white" py={4}>
+    <Box bg="gray.800" color="white" py={2}>
       <Flex justify={'space-between'} ml={10} mr={10}>
         <Link to={routes.home()}>
-        <Heading as="h1" size="lg">
+        <Heading as="h1" size="lg" mt={2}>
           Redwood Blog
         </Heading>
         </Link>
           <Spacer />
       <Flex mr={200}>
-        <Breadcrumb>
-        {hasRole('admin') && (
-          <>
+        <Breadcrumb mt={3}>
+        {hasRole('admin') && [(
           <BreadcrumbItem>
             <BreadcrumbLink as={Link} to={routes.users()}>Admin Portal</BreadcrumbLink>
           </BreadcrumbItem>
+          ),(
           <BreadcrumbItem>
             <BreadcrumbLink as={Link} to={routes.posts()}>Blog Portal</BreadcrumbLink>
           </BreadcrumbItem>
-          </>
-            )}
+            )]}
+          {(isPage('/') || isPage('/about') || isPage('/contact')) && [(
           <BreadcrumbItem>
             <BreadcrumbLink as={Link} to={routes.about()}>About</BreadcrumbLink>
           </BreadcrumbItem>
+          ),(
           <BreadcrumbItem>
             <BreadcrumbLink as={Link} to={routes.contact()}>Contact</BreadcrumbLink>
           </BreadcrumbItem>
+            )]}
         </Breadcrumb>
-        {/* <ButtonGroup> */}
-
-        {/* {hasRole('admin') && (
-          <>
-          <Link to={routes.users()}>
-            <Button colorScheme="teal">Admin Portal</Button>
-          </Link>
-
-              <Link to={routes.posts()}>
-                <Button colorScheme="teal">Blog Portal</Button>
-              </Link>
-              </>
-            )} */}
-        {/* {(isPage('/') || isPage('/about') || isPage('/contact')) && [(
-          <Link to={routes.about()}>
-      <Button colorScheme="teal">About</Button>
-      </Link>),
-          (<Link to={routes.contact()}>
-            <Button colorScheme="teal">Contact</Button>
-          </Link>
-        )]}
-        </ButtonGroup> */}
         </Flex>
-        {isAuthenticated ? (
-          // <Button colorScheme="teal" onClick={logOut}>
-          //   Log Out
-          // </Button>
-          <Avatar name={currentUser.email} onClick={logOut}/>
-        ) : (
-          isPage('/login') ? (
-            <Link to={routes.signup()}>
-              <Button colorScheme="teal">Sign Up</Button>
-            </Link>
-          ) : (
-            <Link to={routes.login()}>
-              <Button colorScheme="teal">Sign In</Button>
-            </Link>
-          )
-          )}
+        <Breadcrumb mt={3}>
+          {renderAvatar()}
+          </Breadcrumb>
       </Flex>
     </Box>
   );
